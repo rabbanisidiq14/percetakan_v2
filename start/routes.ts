@@ -35,12 +35,12 @@ Route.group(() => {
   Route.put('transactions', 'TransactionsController.update')
 }).prefix('api/public/v1') // Tanpa Auth
 
-Route.get('', async ({ view }) => {
-  return view.render('home')
-})
 Route.post('login', async (ctx) => {
   return new AuthController().login(ctx)
 })
 Route.post('logout', async (ctx) => {
   return new AuthController().logout(ctx)
+})
+Route.get('/*', async ({ view }) => {
+  return view.render('home')
 })

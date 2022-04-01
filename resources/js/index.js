@@ -1,38 +1,50 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
+import { Routes, Route, Link } from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
+import Landing from './landing'
+import Login from './auth/login'
+import Product from './products/index'
 
-const Index = () => {
+function Navbar() {
+  const [showNav, setshowNav] = useState(false)
+  const isMediumScreen = useMediaQuery({ minWidth: 768 })
   return (
     <Fragment>
-      <div className="flex flex-row p-2 m-2 bg-purple-100 rounded-md">
-        <a className="p-2 hover:text-purple-800" href="">
-          Produk
-        </a>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 px-5">
-        <div className="flex w-3/4 justify-center">
-          <img
-            src="https://static.bmdstatic.com/gk/production/5ded95176dfb3588d9909fafb2a5fdf5.png"
-            alt=""
-          />
-        </div>
-        <div className="flex flex-col justify-center gap-2 text-justify">
-          <p className="text-4xl">Percetakan Rabbani</p>
-          <p className="text-base">
-            Cetaklah di sini, murah sekali Ipsum Lorem magna culpa exercitation minim. Sint nostrud
-            minim culpa esse laborum magna qui veniam enim incididunt in eiusmod anim. Mollit veniam
-            ipsum ullamco nisi amet magna ea. Aliqua veniam qui amet pariatur labore ea sint ea
-            commodo et non esse non adipisicing. Ipsum cupidatat dolore minim amet. Esse aliquip est
-            ex eiusmod aute enim deserunt voluptate est reprehenderit.
-          </p>
-          <span className="text-center md:text-left">
-            <a className="p-5 rounded bg-purple-800 text-purple-100 inline-block w-fit" href="">
-              Cetak Sekarang
-            </a>
+      <div className="flex flex-col md:flex-row m-2 bg-purple-100 rounded-md">
+        <div className="flex flex-row justify-between">
+          <Link to="/" className="p-4 md:hover:bg-purple-200 rounded-md flex-auto">
+            Home
+          </Link>
+          <span
+            className="p-4 md:hidden float-right flex-none cursor-pointer select-none"
+            onClick={() => setshowNav(!showNav)}
+          >
+            {showNav ? 'X' : 'O'}
           </span>
         </div>
+        {(isMediumScreen || showNav) && (
+          <div className="flex flex-col md:flex-row">
+            <Link to="/product" className="p-4 md:hover:bg-purple-200 rounded-md">
+              Produk
+            </Link>
+            <Link to="/login" className="p-4 md:hover:bg-purple-200 rounded-md">
+              Login
+            </Link>
+          </div>
+        )}
       </div>
     </Fragment>
   )
 }
+const Index = () => (
+  <Fragment>
+    <Navbar />
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/product" element={<Product />} />
+    </Routes>
+  </Fragment>
+)
 
 export default Index
