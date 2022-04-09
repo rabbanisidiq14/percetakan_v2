@@ -1,9 +1,11 @@
 import React, { Fragment, useState } from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useParams } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import Landing from './landing'
 import Login from './auth/login'
 import Product from './products/index'
+import ProductDetail from './products/detail'
+import Dashboard from './dashboard/index'
 
 function Navbar() {
   const [showNav, setshowNav] = useState(false)
@@ -36,6 +38,7 @@ function Navbar() {
     </Fragment>
   )
 }
+
 const Index = () => (
   <Fragment>
     <Navbar />
@@ -43,6 +46,9 @@ const Index = () => (
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/product" element={<Product />} />
+      <Route path="/product/:id" element={<ProductDetail />} />
+
+      <Route path="/dashboard/*" element={<Dashboard />} />
     </Routes>
   </Fragment>
 )
